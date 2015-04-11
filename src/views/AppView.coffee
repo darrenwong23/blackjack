@@ -7,10 +7,23 @@ class window.AppView extends Backbone.View
 
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.get('playerHand').stand()
+    'click .stand-button': (->
+      @model.get('playerHand').stand()
+      @$('button').prop 'disabled', true
+    )
+
 
   initialize: ->
     @render()
+    @model.on 'change', (->
+      context = @
+      @$('button').prop 'disabled', true
+      setTimeout context.render.bind(@), 2000
+
+    ), @
+
+
+
 
   render: ->
     @$el.children().detach()

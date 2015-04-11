@@ -6,6 +6,13 @@ class window.Hand extends Backbone.Collection
   hit: ->
     @add(@deck.pop())
 
+
+  stand: ->
+    # we know that player has not busted
+    # keep hitting, if dealer is not >= 17
+    @trigger 'stand', this
+
+
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
   , 0
